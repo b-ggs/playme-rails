@@ -1,7 +1,8 @@
 $(document).ready(function()
 {
-	$(".button-collapse").sideNav();
 	$('.modal-trigger').leanModal();
+	$('.parallax').parallax();
+	$('.button-collapse').sideNav();
 })
 
 function showNowPlaying()
