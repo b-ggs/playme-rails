@@ -1,0 +1,122 @@
+<body>
+	<header>
+		<nav class="orange">
+			<div class="container nav-wrapper">
+				<a href="index.html" class="brand-logo"><%= image_tag "logo.png", :class => "logo" %></a>
+				<ul class="right hide-on-med-and-down">
+				    <!-- <li><a href="#"><i class="mdi-action-home"></i></a></li>
+					<li><a href="#"><i class="mdi-av-queue-music"></i></a></li>
+					<li><a href="#"><i class="mdi-file-file-upload"></i></a></li>
+					<li><a href="#"><i class="mdi-social-person"></i></a></li> -->
+					<li><a href="#login-modal" class="modal-trigger">Login</a></li>
+					<li><a href="#signup-modal" class="modal-trigger">Sign Up</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div class="parallax-container">
+		<div class="parallax">
+			<%= image_tag "header2.jpg" %>
+		</div>
+	</div>
+	<div class="section white">
+    	<div class="row container">
+      		<h2 class="header">The next big thing is here.</h2>
+      		<span class="grey-text text-darken-3 lighten-3">Don't miss out on the best listening experience to date.</span>
+    	</div>
+    </div>
+    <div class="parallax-container">
+		<div class="parallax">
+			<%= image_tag "header1.jpg" %>
+		</div>
+	</div>
+	<div class="section white">
+    	<div class="row container">
+      		<h2 class="header">Designed especially for you.</h2>
+      		<span class="grey-text text-darken-3 lighten-3">Your music. Your playlists. Just sit back, relax, and enjoy.</span>
+   		</div>
+  	</div>
+  	<div class="parallax-container">
+		<div class="parallax">
+			<%= image_tag "header3.jpg" %>
+		</div>
+	</div>
+	<div class="section white">
+    	<div class="row container">
+    		<div class="col s12 m8">
+	      		<span><h2 class="header">Don't miss out!</h2></span>
+	      		<p class="grey-text text-darken-3 lighten-3">Experience the game-changing service tailored to fit your music needs. Sign up now!</p>
+	      	</div>
+	      	<div class="col s12 m4">
+	      		<div style="margin-top: 25px; text-align: right;">
+		      		<a class="waves-effect waves-light btn-large modal-trigger" href="#login-modal" class="modal-trigger">Login</a>
+	      			<a class="waves-effect waves-light btn-large modal-trigger" href="#signup-modal" class="modal-trigger">Sign Up</a>
+	      		</div> 
+      		</div>
+   		</div>
+  	</div>
+
+  	<div id="login-modal" class="modal">
+		<div class="modal-content">
+			<h4>Login</h4>
+			<%= form_tag('/login', method: :post) do %>
+				<div class="row">
+					<div class="input-field col s6">
+						<i class="mdi-social-person prefix"></i>
+				        <input id="username"  name="username" type="text" class="validate">
+				        <label for="username">Username</label>
+					</div>
+					<div class="input-field col s6">
+						<i class="mdi-action-lock prefix"></i>
+				        <input id="password" name="password" type="password" class="validate">
+				        <label for="password">Password</label>
+			      	</div>
+				</div>
+			<!-- </form> -->
+		
+			<div class="modal-footer">
+				<!-- <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Login</a> -->
+				<button type="submit" class="waves-effect waves-green btn-flat" value="Sign Up"> Log in 
+			</button>
+			</div>
+			<%end%>
+		</div>
+	</div>
+
+	<div id="signup-modal" class="modal">
+		<div class="modal-content">
+			<h4>Sign Up</h4>
+			<%= form_tag('/signup', method: :post) do %>
+				<div class="row">
+					<div class="input-field col s12 m6">
+						<i class="mdi-social-person prefix"></i>
+				        <input id="username" name="username" type="text" class="validate">
+				        <label for="username">Username</label>
+					</div>
+					<div class="input-field col s12 m6">
+						<i class="mdi-communication-email prefix"></i>
+				        <input id="email" name="email" type="text" class="validate">
+				        <label for="email">Email</label>
+					</div>
+					<div class="input-field col s12 m6">
+						<i class="mdi-action-lock prefix"></i>
+				        <input id="password" name="password" type="password" class="validate">
+				        <label for="password">Password</label>
+			      	</div>
+			      	<div class="input-field col s12 m6">
+						<i class="mdi-action-lock prefix"></i>
+				        <input id="password2" name="password2" type="password" class="validate">
+				        <label for="password2">Confirm Password</label>
+			      	</div>
+				</div>
+				<!-- </form> -->
+		<div class="modal-footer">
+			<!-- <a class="waves-effect waves-green btn-flat modal-action modal-close"> -->
+			<button type="submit" class="waves-effect waves-green btn-flat" value="Sign Up"> Sign Up 
+			</button>
+			<!-- </a> -->
+		</div>
+		<%end %>
+		</div>
+	</div>
+</body>
