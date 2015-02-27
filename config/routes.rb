@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   post 'signup' => 'sessions#signup'
   post 'login' => 'sessions#login'
   post 'logout' => 'sessions#logout'
+  post 'upload' => 'application#upload'
+  post 'newplaylist' => 'application#new_playlist'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
