@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+	has_many :playlist
+	
 	def self.create_user(username, email, password, password_confirm)
 		return false if password != password_confirm
 		return false if User.where(username: username).to_a.size > 0

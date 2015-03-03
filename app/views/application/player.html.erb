@@ -1,43 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="css/materialize.css" />
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
-	<script src="js/jquery-2.1.1.js" type="text/javascript"></script>
-	<script src="js/jquery-ui.js" type="text/javascript"></script>
-	<script src="js/materialize.js" type="text/javascript"></script>
-	<script src="js/script.js" type="text/javascript"></script>
-</head>
-<style>
-#logout{
-	font-size: 1rem;
-	color: #fff;
-	display: inline-block;
-	padding: 0px 15px;
-	background-color: transparent;
-	border:none;
-}
-</style>
-<body>
+<body onresize="resizeFrameOnResize()">
 	<header>
 		<nav class="orange">
 			<div class="container nav-wrapper">
-				<a href="index.html" class="brand-logo"><%= image_tag "logo.png", :class => "logo" %></a>
+				<a href="/" class="brand-logo"><%= image_tag "logo.png", :class => "logo" %></a>
 				<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
 				<ul class="right hide-on-med-and-down">
 			        <!-- <li><a href="#"><i class="mdi-action-home"></i></a></li>
 					<li><a href="#"><i class="mdi-av-queue-music"></i></a></li>
 					<li><a href="#"><i class="mdi-file-file-upload"></i></a></li>
 					<li><a href="#"><i class="mdi-social-person"></i></a></li> -->
+					<li><a href="/innerplayer" target="innerplayer" class="modal-trigger">Playlists</a></li>
 					<li><a href="#upload-modal" class="modal-trigger">Upload</a></li>
 					<li><a href="#"><%= @username.username %></a></li>
 					<li><!-- <a href="/logout"> Logout</a> -->
 					<%= form_tag('/logout', method: :post) do %>
-						<button type="submit" id="logout"> Logout </button>
+						<button type="submit" class="logout" id="logout"> Logout </button>
 					<%end%>
 					</li>
 			    </ul>
 			    <ul class="side-nav" id="mobile-demo">
+			    	<li><a href="/innerplayer" target="innerplayer" class="modal-trigger">Playlists</a></li>
 					<li><a href="#upload-modal" class="modal-trigger">Upload</a></li>
 					<li><a href="#"><%= @username.username %></a></li>
 					<li><!-- <a href="/logout"> Logout</a> -->
@@ -48,7 +30,7 @@
 			    </ul>
 			</div>
 		</nav>
-		<div class="nowplaying z-depth-1 hide-content">
+		<div class="nowplaying z-depth-1">
 			<div class="container" style="vertical-align: middle;">
 				<div class="row">
 					<div class="col s12 m9">
@@ -89,43 +71,14 @@
 		</div>
 	</header>
 	<main>
-		<div class="playlists container">
-			<h4>Playlists</h4>
-			<div class="row" style="margin-top: 10px;">
-				<% if @playlists.present? %>
-					<% @playlists.each do |playlist| %>
-						<div class="col s6 m3">
-							<div class="card">
-								<div class="card-image">
-									<%= image_tag "default.png"  %>
-								</div>
-									<div class="card-content">
-									<span class="card-title activator grey-text text-darken-4">
-										<%= playlist.name %>
-									</span>
-								</div>
-							</div>
-						</div>
-					<% end %>
-				<% end %>
-				<div class="col s6 m3">
-					<div href="#playlist-modal" class="card modal-trigger">
-						<div class="card-image">
-							<%= image_tag "newplaylist.png"  %>
-						</div>
-						<div class="card-content">
-							<span class="card-title activator grey-text text-darken-4">New Playlist</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<iframe id="innerplayer" name="innerplayer" src="/innerplayer" onload="this.height= ($(window).height() - $('header').height() - 10);">
+		</iframe>
+	</main>
 
-
-		<div id="upload-modal" class="modal">
+	<div id="upload-modal" class="modal">
 			<div class="modal-content">
 				<h4>Upload</h4>
-				<p>Select a file to upload. The file will be stored in the Unsorted playlist.</p>
+				<p>Select a file to upload.</p>
 				<%= form_tag({action: :upload}, multipart: true) do %>
 					<div class="file-field input-field">
 						<input class="file-path validate" type="text" onchange="this.value = this.value.replace('C:\\fakepath\\', '');" />
@@ -135,16 +88,37 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="input-field col s6">
-							<i class="mdi-av-album prefix"></i>
+						<div class="input-field col s4">
+							<i class="mdi-image-audiotrack prefix"></i>
 					        <input id="icon_title" name="icon_title" type="text" class="validate">
 					        <label for="icon_title">Title</label>
 						</div>
-						<div class="input-field col s6">
+						<div class="input-field col s4">
 							<i class="mdi-social-person prefix"></i>
-					        <input id="icon_artist" name="icon_artist" type="tel" class="validate">
+					        <input id="icon_artist" name="icon_artist" type="text" class="validate">
 					        <label for="icon_artist">Artist</label>
-				      </div>
+				      	</div>
+				      	<div class="input-field col s4">
+							<i class="mdi-av-album prefix"></i>
+					        <input id="icon_album" name="icon_album" type="text" class="validate">
+					        <label for="icon_album">Album</label>
+						</div>
+					</div>
+					<div class="row" style="margin-top: -30px;">
+						<div class="col s12">
+							<label>Playlist</label>
+							<% if @playlists.present? %>
+								<select id="icon_playlist" name="icon_playlist">
+									<% @playlists.each do |playlist| %>
+										<option value="<%= playlist.id %>"><%= playlist.name %></option>
+									<% end %>
+								</select>
+							<% else %>
+								<select id="icon_playlist" name="icon_playlist" disabled>
+									<option value="" disabled selected>No playlists available.</option>
+								</select>
+							<% end %>
+				      	</div>
 					</div>
 				
 				<!-- </form> -->
@@ -154,69 +128,4 @@
 			</div>
 			<% end %>
 		</div>
-
-		<div id="playlist-modal" class="modal">
-			<div class="modal-content">
-				<h4>New Playlist</h4>
-				<%= form_tag('/newplaylist', method: :post) do %>
-					<div class="row">
-						<div class="input-field col s12">
-							<i class="mdi-av-playlist-add prefix"></i>
-					        <input id="pname" name="pname" type="text" class="validate">
-					        <label for="pname">Name</label>
-				      	</div>
-					</div>
-			
-				<div class="modal-footer">
-					<!-- <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Login</a> -->
-					<button type="submit" class="waves-effect waves-green btn-flat" value="Create"> Create
-				</button>
-				</div>
-				<% end %>
-			</div>
-		</div>
-
-		<!-- <div class="upload container">
-			<h4>Upload</h4>
-			<p>Select a file to upload. The file will be stored in the Unsorted playlist.</p>
-		</div> -->
-
-
-		<div class="playlistDetails container hide-content">
-			<span>
-				<h4 class="nobreak">EDM</h4>
-				<a href="#!" class="black-text"><i class="mdi-image-edit tiny-small"></i></a>
-				<a href="#!" class="black-text"><i class="mdi-action-delete tiny-small"></i></a>
-			</span>
-
-			<ul class="collection with-header">
-				<li class="collection-item">
-					<div>
-						<b><span>U</span></b>&nbsp;&nbsp;&nbsp;&nbsp;
-						<span>Gareth Emery, Bo Bruce</span>
-						<a href="#!" class="secondary-content black-text"><i class="mdi-action-delete"></i></a>
-						<a href="#!" class="secondary-content black-text"><i class="mdi-av-playlist-add"></i></a>
-						<a href="#!" class="secondary-content black-text"><i class="mdi-av-play-arrow"></i></a>
-					</div>
-				</li>
-				<li class="collection-item">
-					<div>
-						<b><span>Divine Sorrow</span></b>&nbsp;&nbsp;&nbsp;&nbsp;
-						<span>Wyclef Jean, Avicii</span>
-						<a href="#!" class="secondary-content black-text"><i class="mdi-action-delete"></i></a>
-						<a href="#!" class="secondary-content black-text"><i class="mdi-av-playlist-add"></i></a>
-						<a href="#!" class="secondary-content black-text"><i class="mdi-av-play-arrow"></i></a>
-					</div>
-				</li>
-			</ul>
-		</div>
-
-		<!-- <button onclick="hideNowPlaying()">hideNowPlaying</button>
-		<button onclick="showNowPlaying()">showNowPlaying</button>
-		<button onclick="hidePlaylists()">hidePlaylists</button>
-		<button onclick="showPlaylists()">showPlaylists</button>
-		<button onclick="hidePlaylistDetails()">hidePlaylistDetails</button>
-		<button onclick="showPlaylistDetails()">showPlaylistDetails</button> -->
-	</main>
 </body>
-<!-- </html>

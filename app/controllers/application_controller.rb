@@ -5,40 +5,59 @@ class ApplicationController < ActionController::Base
 
   before_action :require_login
 
- 
   def player
+    redirect_to root_path if session[:user_id].nil?
+
   	@username = User.find(session[:user_id])
-    @playlists = Playlist.all.to_a
+    @playlists = Playlist.where(user_id:session[:user_id]).all.to_a
   end
 
+  def innerplayer
+    @username = User.find(session[:user_id])
+    @playlists = Playlist.where(user_id:session[:user_id]).all.to_a
+  end
+
+  def innerplaylist
+    @playlist = Playlist.where(id:session[:playlist], user_id:session[:user_id]).first
+    @playlistcontent = Song.where(playlist_id:session[:playlist], user_id:session[:user_id])
+    session[:playlist] = nil
+  end
 
   def current_user
   	User.where(id:session[:user_id]).first
   end
 
   def upload
+    user_id = session[:user_id]
+    playlist_id = params[:icon_playlist]
     uploaded_io = params[:song]
-    title = params[:title]
-    artist = params[:artist]
+    title = params[:icon_title]
+    artist = params[:icon_artist]
+    album = params[:icon_album]
 
     File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
     end
 
-    Song.new_song(uploaded_io.original_filename, title, artist)
+    Song.new_song(user_id, playlist_id, uploaded_io.original_filename, title, artist, album)
 
-    redirect_to root_path
+    redirect_to '/'
   end
 
   def new_playlist
     name = params[:pname]
+    userid = User.where(id:session[:user_id]).first.id
 
-    Playlist.new_playlist(name)
+    Playlist.new_playlist(userid, name)
 
-    redirect_to root_path
+    redirect_to '/innerplayer'
   end
 
-  private
+  def playlist_select
+    session[:playlist] = params[:playlistId]
+
+    redirect_to '/innerplaylist'
+  end
 
   def require_login
   	redirect_to root_path if session[:user_id].nil?

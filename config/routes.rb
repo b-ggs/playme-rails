@@ -5,11 +5,15 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'sessions#index'
   get 'player' => 'application#player'
+  get 'innerplayer' => 'application#innerplayer'
+  get 'innerplaylist' => 'application#innerplaylist'
+  
   post 'signup' => 'sessions#signup'
   post 'login' => 'sessions#login'
   post 'logout' => 'sessions#logout'
   post 'upload' => 'application#upload'
   post 'newplaylist' => 'application#new_playlist'
+  post 'playlistselect' => 'application#playlist_select'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
