@@ -15,12 +15,12 @@ class ApplicationController < ActionController::Base
   def innerplayer
     @username = User.find(session[:user_id])
     @playlists = Playlist.where(user_id:session[:user_id]).all.to_a
+    session[:playlist] = nil
   end
 
   def innerplaylist
     @playlist = Playlist.where(id:session[:playlist], user_id:session[:user_id]).first
     @playlistcontent = Song.where(playlist_id:session[:playlist], user_id:session[:user_id])
-    session[:playlist] = nil
   end
 
   def current_user
@@ -55,6 +55,13 @@ class ApplicationController < ActionController::Base
 
   def playlist_select
     session[:playlist] = params[:playlistId]
+
+    redirect_to '/innerplaylist'
+  end
+
+  def playlist_item_select
+    @selected_playlist = Playlist.where(id:session[:playlist])
+    @selected_song = Song.where(id:params[:songId], playlist_id:session[:playlist])
 
     redirect_to '/innerplaylist'
   end

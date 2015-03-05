@@ -8,13 +8,23 @@
 			<ul class="collection with-header">
 			<li class="collection-item">
 				<% if @playlistcontent.present? %>
+					<script>
+						var tempPlaylist = [];
+					</script>
 					<% @playlistcontent.each do |playlistItem| %>
-						<div>
-							<b><span><%= playlistItem.title %></span></b>&nbsp;&nbsp;&nbsp;&nbsp;
-							<span><%= playlistItem.artist %></span>&nbsp;&#8226;
-							<span><%= playlistItem.album %></span>
-							<a href="#!" class="secondary-content black-text"><i class="mdi-action-delete"></i></a>
-							<a href="#!" class="secondary-content black-text"><i class="mdi-av-play-arrow"></i></a>
+						<div class="playlist-container">
+							<%= form_tag('/playlistitemselect', method: :post, id: 'playlist-item-select') do %>
+								<div class="container-item">
+									<script>
+										tempPlaylist.push(new Song(<%= playlistItem.id %>, "<%= playlistItem.title %>", "<%= playlistItem.artist %>", "<%= playlistItem.album %>", "<%= playlistItem.filename %>"));
+									</script>
+									<b><span><%= playlistItem.title %></span></b>&nbsp;&nbsp;&nbsp;&nbsp;
+									<span><%= playlistItem.artist %></span>&nbsp;&#8226;
+									<span><%= playlistItem.album %></span>
+									<a href="#" class="secondary-content black-text" onclick="$(this).closest('#playlist-item-select').submit();"><i class="mdi-action-delete"></i></a>
+									<a href="#" class="secondary-content black-text" onclick="audioSetPlaylist(tempPlaylist); alert($(this).closest('.playlist-container').index(this));"><i class="mdi-av-play-arrow"></i></a>
+								</div>
+							<% end %>
 						</div>
 					<% end %>
 				<% else %>

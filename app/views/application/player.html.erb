@@ -1,4 +1,8 @@
 <body onresize="resizeFrameOnResize()">
+	<div style="display: none;">
+		<!-- <audio id="audiojsplayer" src="uploads/Exige 2015 Proximity Mashup.mp3" preload="auto" /> -->
+		<audio id="audiojsplayer" preload="auto" />
+	</div>
 	<header>
 		<nav class="orange">
 			<div class="container nav-wrapper">
@@ -32,41 +36,48 @@
 		</nav>
 		<div class="nowplaying z-depth-1">
 			<div class="container" style="vertical-align: middle;">
-				<div class="row">
-					<div class="col s12 m9">
-						<span style="white-space: nowrap;">
-							<span>
-								<%= image_tag "default.png", :class => "nowplayingart" %>
-							</span>
+				<!-- <div id="jp_container_1" class="demo-container"> -->
+					<div class="row">
+						<div class="col s12 m9">
 							<span style="white-space: nowrap;">
-								<span style="vertical-align: middle; white-space: nowrap;">
-									<h5 class="nobreak">U</h5>
-									<br />
-									Gareth Emery, Bo Bruce
+								<span>
+									<%= image_tag "default.png", :class => "nowplayingart" %>
+								</span>
+								<span style="white-space: nowrap;">
+									<span style="vertical-align: middle; white-space: nowrap;">
+										<h5 class="nobreak"><span class="audio-title">U</span></h5>
+										<br />
+										<span class="audio-artist">Gareth Emery, Bo Bruce</span>
+									</span>
 								</span>
 							</span>
-						</span>
+						</div>
+						<div class="col s12 m3" style="text-align: right;">
+							<span style="white-space: nowrap;">
+								<span style="display: inline-block; vertical-align: middle;">
+									<a style="margin: 15px; margin-top: 7px;" class="black-text">
+										<i class="mdi-av-skip-previous small"></i>
+									</a>
+								</span>
+								<span id="audio-pause" style="display: inline-block; vertical-align: middle;">
+									<a onclick="audioPlay();" style="margin: 0px; margin-top: 7px;" class="btn-floating btn-large waves-effect waves-light orange">
+										<i class="mdi-av-pause"></i>
+									</a>
+								</span>
+								<span id="audio-play" style="display: inline-block; vertical-align: middle;">
+									<a onclick="audioPlay();" style="margin: 0px; margin-top: 7px;" class="btn-floating btn-large waves-effect waves-light orange">
+										<i class="mdi-av-play-arrow"></i>
+									</a>
+								</span>								
+								<span style="display: inline-block; vertical-align: middle;">
+									<a style="margin: 15px; margin-top: 7px; margin-right: 5px;" class="black-text">
+										<i class="mdi-av-skip-next small"></i>
+									</a>
+								</span>
+							</span>
+						</div>
 					</div>
-					<div class="col s12 m3" style="text-align: right;">
-						<span style="white-space: nowrap;">
-							<span style="display: inline-block; vertical-align: middle;">
-								<a style="margin: 15px; margin-top: 7px;" class="black-text">
-									<i class="mdi-av-skip-previous small"></i>
-								</a>
-							</span>
-							<span style="display: inline-block; vertical-align: middle;">
-								<a style="margin: 0px; margin-top: 7px;" class="btn-floating btn-large waves-effect waves-light orange">
-									<i class="mdi-av-pause"></i>
-								</a>
-							</span>
-							<span style="display: inline-block; vertical-align: middle;">
-								<a style="margin: 15px; margin-top: 7px; margin-right: 5px;" class="black-text">
-									<i class="mdi-av-skip-next small"></i>
-								</a>
-							</span>
-						</span>
-					</div>
-				</div>
+				<!-- </div> -->
 			</div>
 		</div>
 	</header>
