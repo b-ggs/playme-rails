@@ -1,8 +1,4 @@
 <body onresize="resizeFrameOnResize()">
-	<div style="display: none;">
-		<!-- <audio id="audiojsplayer" src="uploads/Exige 2015 Proximity Mashup.mp3" preload="auto" /> -->
-		<audio id="audiojsplayer" preload="auto" />
-	</div>
 	<header>
 		<nav class="orange">
 			<div class="container nav-wrapper">
@@ -15,117 +11,67 @@
 					<li><a href="#"><i class="mdi-social-person"></i></a></li> -->
 					<li><a href="/innerplayer" target="innerplayer" class="modal-trigger">Playlists</a></li>
 					<li><a href="#upload-modal" class="modal-trigger">Upload</a></li>
-					<li><a href="#"><%= @username.username %></a></li>
-					<li><!-- <a href="/logout"> Logout</a> -->
-					<%= form_tag('/logout', method: :post) do %>
-						<button type="submit" class="logout" id="logout"> Logout </button>
-					<%end%>
-					</li>
+					<li><a href="#" class="dropdown-button" data-activates="user-dropdown"><%= @username.username %></a></li>
 			    </ul>
 			    <ul class="side-nav" id="mobile-demo">
 			    	<li><a href="/innerplayer" target="innerplayer" class="modal-trigger">Playlists</a></li>
 					<li><a href="#upload-modal" class="modal-trigger">Upload</a></li>
-					<li><a href="#"><%= @username.username %></a></li>
-					<li><!-- <a href="/logout"> Logout</a> -->
-					<%= form_tag('/logout', method: :post) do %>
-						<button type="submit" id="logout"> Logout </button>
-					<%end%>
-					</li>
+					<li><a href="#" class="dropdown-button" data-activates="user-dropdown"><%= @username.username %></a></li>
 			    </ul>
 			</div>
 		</nav>
-		<div class="nowplaying z-depth-1">
-			<div class="container" style="vertical-align: middle;">
-				<!-- <div id="jp_container_1" class="demo-container"> -->
-					<div class="row">
-						<div class="col s12 m9">
-							<span style="white-space: nowrap;">
-								<span>
-									<%= image_tag "default.png", :class => "nowplayingart" %>
-								</span>
-								<span style="white-space: nowrap;">
-									<span style="vertical-align: middle; white-space: nowrap;">
-										<h5 class="nobreak"><span class="audio-title">U</span></h5>
-										<br />
-										<span class="audio-artist">Gareth Emery, Bo Bruce</span>
-									</span>
-								</span>
-							</span>
-						</div>
-						<div class="col s12 m3" style="text-align: right;">
-							<span style="white-space: nowrap;">
-								<span style="display: inline-block; vertical-align: middle;">
-									<a style="margin: 15px; margin-top: 7px;" class="black-text">
-										<i class="mdi-av-skip-previous small"></i>
-									</a>
-								</span>
-								<span id="audio-pause" style="display: inline-block; vertical-align: middle;">
-									<a onclick="audioPlay();" style="margin: 0px; margin-top: 7px;" class="btn-floating btn-large waves-effect waves-light orange">
-										<i class="mdi-av-pause"></i>
-									</a>
-								</span>
-								<span id="audio-play" style="display: inline-block; vertical-align: middle;">
-									<a onclick="audioPlay();" style="margin: 0px; margin-top: 7px;" class="btn-floating btn-large waves-effect waves-light orange">
-										<i class="mdi-av-play-arrow"></i>
-									</a>
-								</span>								
-								<span style="display: inline-block; vertical-align: middle;">
-									<a style="margin: 15px; margin-top: 7px; margin-right: 5px;" class="black-text">
-										<i class="mdi-av-skip-next small"></i>
-									</a>
-								</span>
-							</span>
-						</div>
-					</div>
-				<!-- </div> -->
-			</div>
-		</div>
 	</header>
 	<main>
 		<iframe id="innerplayer" name="innerplayer" src="/innerplayer" onload="this.height= ($(window).height() - $('header').height() - 10);">
 		</iframe>
 	</main>
 
+	<ul id="user-dropdown" class="dropdown-content">
+		<%= form_tag('/logout', method: :post, id: 'logout-button') do %>	
+			<li><a href="#" onclick="$(this).closest('#logout-button').submit();">Logout</a></li>
+		<% end %>
+	</ul>
+
 	<div id="upload-modal" class="modal">
+		<%= form_tag({:action => "upload"}, :multipart => true) do %>
 			<div class="modal-content">
 				<h4>Upload</h4>
 				<p>Select a file to upload.</p>
-				<%= form_tag({action: :upload}, multipart: true) do %>
 					<div class="file-field input-field">
 						<input class="file-path validate" type="text" onchange="this.value = this.value.replace('C:\\fakepath\\', '');" />
 						<div class="btn">
 							<span>File</span>
-							<%= file_field_tag 'song' %>
+							<%= file_field_tag 'sFile' %>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s4">
 							<i class="mdi-image-audiotrack prefix"></i>
-					        <input id="icon_title" name="icon_title" type="text" class="validate">
-					        <label for="icon_title">Title</label>
+					        <input id="sTitle" name="sTitle" type="text" class="validate">
+					        <label for="sTitle">Title</label>
 						</div>
 						<div class="input-field col s4">
 							<i class="mdi-social-person prefix"></i>
-					        <input id="icon_artist" name="icon_artist" type="text" class="validate">
-					        <label for="icon_artist">Artist</label>
+					        <input id="sArtist" name="sArtist" type="text" class="validate">
+					        <label for="sArtist">Artist</label>
 				      	</div>
 				      	<div class="input-field col s4">
 							<i class="mdi-av-album prefix"></i>
-					        <input id="icon_album" name="icon_album" type="text" class="validate">
-					        <label for="icon_album">Album</label>
+					        <input id="sAlbum" name="sAlbum" type="text" class="validate">
+					        <label for="sAlbum">Album</label>
 						</div>
 					</div>
-					<div class="row" style="margin-top: -30px;">
+					<div class="row" style="margin-top: -30px;"> <!-- style="margin-top: -30px;" -->
 						<div class="col s12">
 							<label>Playlist</label>
 							<% if @playlists.present? %>
-								<select id="icon_playlist" name="icon_playlist">
+								<select id="pId" name="pId">
 									<% @playlists.each do |playlist| %>
 										<option value="<%= playlist.id %>"><%= playlist.name %></option>
 									<% end %>
 								</select>
 							<% else %>
-								<select id="icon_playlist" name="icon_playlist" disabled>
+								<select id="pId" name="pId" disabled>
 									<option value="" disabled selected>No playlists available.</option>
 								</select>
 							<% end %>
@@ -137,6 +83,6 @@
 			<div class="modal-footer">
 				<button type="submit" class="waves-effect waves-green btn-flat" value="Upload">Upload</button>
 			</div>
-			<% end %>
 		</div>
+	<% end %>
 </body>

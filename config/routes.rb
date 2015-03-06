@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   post 'upload' => 'application#upload'
   post 'newplaylist' => 'application#new_playlist'
   post 'playlistselect' => 'application#playlist_select'
-  post 'playlistitemselect' => 'application#playlist_item_select'
+  post 'playlistedit' => 'application#playlist_edit'
+  post 'playlistdelete' => 'application#playlist_delete'
+  post 'playlistitemdelete' => 'application#playlist_item_delete'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
