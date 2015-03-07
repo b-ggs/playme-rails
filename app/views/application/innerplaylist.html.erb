@@ -55,7 +55,7 @@
 				<input type="hidden" name="pId" value="<%= @playlist.id %>" />
 				<h4 class="nobreak"><%= @playlist.name %></h4>
 				<a href="#playlist-edit-modal" class="modal-trigger black-text" class="black-text"><i class="mdi-image-edit tiny-small"></i></a>
-				<a href="#!" class="black-text" onclick="$(this).closest('#playlist-delete').submit();"><i class="mdi-action-delete tiny-small"></i></a>
+				<a href="#!" class="black-text" onclick="parent.location.href = parent.location.href; $(this).closest('#playlist-delete').submit();"><i class="mdi-action-delete tiny-small"></i></a>
 			<% end %>
 		</span>
 		<table id="playlist-content" class="hoverable bordered unselectable" unselectable="on">
@@ -110,13 +110,13 @@
 			<input type="hidden" name="pId" value="<%= @playlist.id %>" />
 			<div class="row">
 				<div class="input-field col s12">
-					<i class="mdi-image-edit"></i>
+					<i class="mdi-image-edit prefix"></i>
 			        <input id="pName" name="pName" type="text" class="validate" value="<%= @playlist.name %>">
 			        <label for="pName">Name</label>
 		      	</div>
 			</div>
 		<div class="modal-footer">
-				<button type="submit" class="waves-effect waves-green btn-flat" value="Edit"> Edit </button>
+				<button type="submit" class="waves-effect waves-green btn-flat" value="Edit" onclick="parent.location.href = parent.location.href"> Edit </button>
 		</div>
 		<% end %>
 	</div>

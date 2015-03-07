@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   def innerplayer
     @username = User.find(session[:user_id])
     @playlists = Playlist.where(user_id:session[:user_id]).all.to_a
+
     session[:playlist] = nil
   end
 
@@ -46,8 +47,8 @@ class ApplicationController < ActionController::Base
 
   def new_playlist
     name = params[:pName]
-    userid = User.where(id:session[:user_id]).first.id
 
+    userid = User.where(id:session[:user_id]).first.id
     Playlist.new_playlist(userid, name)
 
     redirect_to '/innerplayer'
