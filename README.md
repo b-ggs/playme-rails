@@ -9,4 +9,11 @@ This implementation contains the following features:
 - Audio playback
 - Rearrangable play queue through drag-and-drop
 
-This was implemented using HTML5, CSS3, JavaScript, and JQuery, and deployed on the Ruby on Rails platform.
+This was implemented using:
+- HTML5
+- CSS3
+- JavaScript
+- JQuery (https://jquery.com/)
+- Ruby on Rails (http://rubyonrails.org)
+- Materialize (http://materializecss.com)
+- audio.js (http://kolber.github.io/audiojs/)
