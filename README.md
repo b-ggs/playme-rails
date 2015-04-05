@@ -1,5 +1,4 @@
 # play.me
-
 Music player project created for PROFSWD S18 under Mr. Maynard Landrito and Mr. Art Caronongan.
 
 This implementation contains the following features:
@@ -15,5 +14,6 @@ This was implemented using:
 - JavaScript
 - JQuery (https://jquery.com/)
 - Ruby on Rails (http://rubyonrails.org)
+- bcrypt (http://bcrypt-ruby.rubyforge.org)
 - Materialize (http://materializecss.com)
-- audio.js (http://kolber.github.io/audiojs/)
+- audio.js (http://kolber.github.io/audiojs)
