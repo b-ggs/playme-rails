@@ -1,4 +1,4 @@
-# profswd-musicplayer
+# play.me
 
 Music player project created for PROFSWD S18 under Mr. Maynard Landrito and Mr. Art Caronongan.
 
